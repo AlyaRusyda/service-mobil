@@ -13,7 +13,7 @@ def menu():
         pilihan = input("Pilih: ")
 
         if pilihan == '1':
-            menu_cu()
+            menu_customer()
         elif pilihan == '2':
             menu_layanan()
         elif pilihan == '3':
