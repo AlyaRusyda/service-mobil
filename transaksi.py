@@ -1,4 +1,5 @@
 from db import get_connection
+from datetime import datetime
 
 def select():
     conn = get_connection()
@@ -12,9 +13,6 @@ def select():
         print(row)
     cursor.close()
     conn.close()
-
-from db import get_connection
-from datetime import datetime
 
 def select():
     conn = get_connection()

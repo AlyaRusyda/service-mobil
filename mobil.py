@@ -3,7 +3,25 @@ from db import get_connection
 def select():
     conn = get_connection()
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM mobil")
+    cursor.execute("""
+        SELECT m.id_mobil, m.no_polisi, m.merk, m.model, c.nama 
+        FROM mobil m
+        LEFT JOIN customer c ON m.id_customer = c.id_customer
+    """)
+    for row in cursor.fetchall():
+        print(row)
+    cursor.close()
+    conn.close()
+
+def select_by_id(id_mobil):
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute("""
+        SELECT m.id_mobil, m.no_polisi, m.merk, m.model, c.nama 
+        FROM mobil m
+        LEFT JOIN customer c ON m.id_customer = c.id_customer
+        WHERE m.id_mobil = %s
+    """, (id_mobil,))
     for row in cursor.fetchall():
         print(row)
     cursor.close()
@@ -13,31 +31,27 @@ def add():
     no_polisi = input("No Polisi: ")
     merk = input("Merk: ")
     model = input("Model: ")
-    nama_pemilik = input("Nama Pemilik: ")
-    no_telepon = input("No Telepon: ")
+    id_customer = input("ID Customer (sudah terdaftar): ")
 
     conn = get_connection()
     cursor = conn.cursor()
     cursor.execute("""
-        INSERT INTO mobil (no_polisi, merk, model, nama_pemilik, no_telepon)
-        VALUES (%s, %s, %s, %s, %s, %s)
-    """, (no_polisi, merk, model, nama_pemilik, no_telepon))
+        INSERT INTO mobil (no_polisi, merk, model, id_customer)
+        VALUES (%s, %s, %s, %s)
+    """, (no_polisi, merk, model, id_customer))
     conn.commit()
     print("Data mobil berhasil ditambahkan.")
     cursor.close()
     conn.close()
 
-from db import get_connection
-from mobil import tampilkan_mobil  # Pastikan fungsi tampilkan_mobil() sudah dibuat
-
 def update():
-    tampilkan_mobil()
+    select()
     id_mobil = input("\nID Mobil yang akan diubah: ")
-
+    select_by_id(id_mobil)
     print("\nApa yang ingin diubah?")
     print("1. Merk")
-    print("2. Tipe")
-    print("3. No Telepon")
+    print("2. Model")
+    print("3. ID Customer")
     print("4. Semuanya")
     pilihan = input("Pilih (1/2/3/4): ")
 
@@ -48,18 +62,19 @@ def update():
         merk = input("Merk baru: ")
         cursor.execute("UPDATE mobil SET merk = %s WHERE id_mobil = %s", (merk, id_mobil))
     elif pilihan == '2':
-        tipe = input("Tipe baru: ")
-        cursor.execute("UPDATE mobil SET model = %s WHERE id_mobil = %s", (tipe, id_mobil))
+        model = input("Model baru: ")
+        cursor.execute("UPDATE mobil SET model = %s WHERE id_mobil = %s", (model, id_mobil))
     elif pilihan == '3':
-        no_telepon = input("No Telepon baru: ")
-        cursor.execute("UPDATE mobil SET no_telepon = %s WHERE id_mobil = %s", (no_telepon, id_mobil))
+        id_customer = input("ID Customer baru: ")
+        cursor.execute("UPDATE mobil SET id_customer = %s WHERE id_mobil = %s", (id_customer, id_mobil))
     elif pilihan == '4':
         merk = input("Merk baru: ")
-        tipe = input("Tipe baru: ")
-        no_telepon = input("No Telepon baru: ")
+        model = input("Model baru: ")
+        id_customer = input("ID Customer baru: ")
         cursor.execute("""
-            UPDATE mobil SET merk = %s, model = %s, no_telepon = %s WHERE id_mobil = %s
-        """, (merk, tipe, no_telepon, id_mobil))
+            UPDATE mobil SET merk = %s, model = %s, id_customer = %s
+            WHERE id_mobil = %s
+        """, (merk, model, id_customer, id_mobil))
     else:
         print("Pilihan tidak valid!")
         cursor.close()

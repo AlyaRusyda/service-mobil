@@ -6,14 +6,14 @@ def menu():
     while True:
         print("\n=== APLIKASI SERVICE MOBIL ===")
         print("1. Kelola Data Customer")
-        print("1. Kelola Data Mobil")
-        print("2. Kelola Data Layanan")
-        print("3. Transaksi Service")
+        print("2. Kelola Data Mobil")
+        print("3. Kelola Data Layanan")
+        print("4. Transaksi Service")
         print("0. Keluar")
         pilihan = input("Pilih: ")
 
         if pilihan == '1':
-            menu_mobil()
+            menu_cu()
         elif pilihan == '2':
             menu_layanan()
         elif pilihan == '3':
@@ -22,6 +22,27 @@ def menu():
             break
         else:
             print("Pilihan tidak valid!")
+
+def menu_customer():
+    while True:
+        print("\n--- MENU CUSTOMER ---")
+        print("1. Lihat Customer")
+        print("2. Tambah Customer")
+        print("3. Ubah Customer")
+        print("4. Hapus Customer")
+        print("0. Kembali")
+        pilihan = input("Pilih: ")
+
+        if pilihan == '1':
+            mobil.select()
+        elif pilihan == '2':
+            mobil.add()
+        elif pilihan == '3':
+            mobil.update()
+        elif pilihan == '4':
+            mobil.delete()
+        elif pilihan == '0':
+            break
 
 def menu_mobil():
     while True:

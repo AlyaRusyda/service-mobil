@@ -8,6 +8,24 @@ def select():
         print(row)
     cursor.close()
     conn.close()
+    
+def select_by_id(id_layanan):
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM jenis_layanan where id_layanan = %s", id_layanan)
+    for row in cursor.fetchall():
+        print(row)
+    cursor.close()
+    conn.close()
+    
+def select_last_row():
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM jenis_layanan ORDER BY id_layanan DESC LIMIT 1")
+    for row in cursor.fetchall():
+        print(row)
+    cursor.close()
+    conn.close()
 
 def add():
     nama = input("Nama Layanan: ")
@@ -27,6 +45,7 @@ def add():
 def update():
     select()
     id_layanan = input("ID Layanan yang akan diubah: ")
+    select_by_id(id_layanan)
     nama = input("Nama Layanan baru: ")
     harga = float(input("Harga baru: "))
 
@@ -37,6 +56,7 @@ def update():
     """, (nama, harga, id_layanan))
     conn.commit()
     print("Layanan berhasil diubah.")
+    select_by_id(id_layanan)
     cursor.close()
     conn.close()
 
@@ -46,8 +66,9 @@ def delete():
 
     conn = get_connection()
     cursor = conn.cursor()
-    cursor.execute("DELETE FROM jenis_layanan WHERE id_layanan = %s", (id_layanan,))
+    cursor.execute("DELETE FROM jenis_layanan WHERE id_layanan = %s", id_layanan)
     conn.commit()
     print("Layanan berhasil dihapus.")
+    select()
     cursor.close()
     conn.close()
