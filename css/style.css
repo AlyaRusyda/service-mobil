@@ -1,0 +1,238 @@
+:root {
+  --bg-dark: #121212;
+  --panel: #1e1e1e;
+  --text-light: #e0e0e0;
+  --text-muted: #aaaaaa;
+  --blue-accent: #4fc3f7;
+  --green-accent: #00e676;
+  --border-dark: #2a2a2a;
+  --red: #ff3232;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--bg-dark);
+  color: var(--text-light);
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.content-wrapper {
+  flex: 1 0 auto;
+}
+
+/* NAVBAR */
+.navbar {
+  background-color: var(--panel) !important;
+  border-bottom: 1px solid var(--border-dark);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.navbar-brand {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--blue-accent) !important;
+}
+
+.navbar-brand:hover {
+  color: #29b6f6 !important;
+}
+
+.nav-link {
+  color: var(--text-light);
+}
+
+/* BUTTONS */
+.btn {
+  border-radius: 6px;
+}
+
+.btn-primary {
+  background-color: var(--blue-accent);
+  border-color: var(--blue-accent);
+  color: black;
+}
+
+.btn-primary:hover {
+  background-color: #29b6f6;
+  border-color: #29b6f6;
+}
+
+.btn-warning {
+  background-color: #fdd835;
+  border-color: #fdd835;
+  color: #000;
+}
+
+.btn-danger {
+  background-color: var(--red);
+  border-color: var(--red);
+}
+
+.btn-danger:hover {
+  background-color: #e60000;
+  border-color: #e60000;
+}
+
+.btn-login {
+  background-color: var(--blue-accent);
+  color: black;
+  font-weight: bold;
+  padding: 6px 16px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.btn-login:hover {
+  background-color: #0288d1;
+  color: white;
+}
+
+.btn-logout {
+  background-color: var(--red);
+  color: black;
+  font-weight: bold;
+  padding: 6px 16px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.btn-logout:hover {
+  background-color: var(--red);
+  color: white;
+}
+
+/* FORM */
+.form-control,
+.form-select {
+  background-color: var(--bg-dark);
+  border: 1px solid var(--border-dark);
+  color: var(--text-light);
+}
+
+.form-control::placeholder {
+  color: var(--text-muted);
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--blue-accent);
+  box-shadow: 0 0 0 0.2rem rgba(79, 195, 247, 0.25);
+  background-color: var(--bg-dark);
+  color: var(--text-light);
+}
+
+/* HERO SECTION */
+.hero::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: -1;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  color: var(--blue-accent);
+  font-weight: bold;
+}
+
+.hero p {
+  color: var(--text-light);
+  font-size: 1.2rem;
+}
+
+/* SECTION TITLE */
+.section-title {
+  text-align: center;
+  color: var(--blue-accent);
+  margin: 60px 0 30px;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+/* CARD */
+.card {
+  background-color: var(--panel);
+  border: 1px solid var(--border-dark);
+  border-radius: 12px;
+  color: var(--text-light);
+  transition: transform 0.2s ease, border 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.05);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  border: 1px solid var(--blue-accent);
+  box-shadow: 0 0 20px rgba(79, 195, 247, 0.2);
+}
+
+.card h3,
+.card h5 {
+  color: var(--green-accent);
+  font-weight: 700;
+}
+
+.card p {
+  color: var(--text-muted);
+  margin-bottom: 0;
+}
+
+.icon {
+  font-size: 2.5rem;
+  color: var(--green-accent);
+  margin-bottom: 10px;
+}
+
+/* TABLE */
+.table {
+  background-color: var(--panel);
+  color: var(--text-light);
+  border: 1px solid var(--border-dark);
+}
+
+.table th {
+  background-color: var(--blue-accent) !important;
+  color: black;
+}
+
+.table td {
+  background-color: var(--panel);
+  color: var(--text-light);
+}
+
+/* MODAL */
+.modal-content {
+  background-color: var(--panel);
+  color: var(--text-light);
+  border: 1px solid var(--border-dark);
+}
+
+/* FOOTER */
+footer {
+  background-color: var(--panel);
+  color: var(--text-muted);
+  text-align: center;
+  padding: 20px;
+  font-size: 0.9rem;
+  margin-top: 60px;
+  flex-shrink: 0;
+}
+
+footer span {
+  color: var(--blue-accent);
+  font-weight: bold;
+}

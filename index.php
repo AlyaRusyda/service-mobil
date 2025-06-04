@@ -1,13 +1,15 @@
-<?php include 'koneksi.php'; ?>
+<?php
+include 'koneksi.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Website Service Mobil</title>
-   <link rel="stylesheet" href="css/all.min.css">
-   <link rel="stylesheet" href="css/bootstrap.min.css">
+   <title>Service Mobil</title>
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+   <link rel="stylesheet" href="css/style.css">
    <style>
       .hero {
          background: url('images/service.jpg') center/cover no-repeat;
@@ -16,115 +18,116 @@
          display: flex;
          align-items: center;
          justify-content: center;
+         text-align: center;
       }
 
       .hero::before {
-         content: '';
+         content: "";
          position: absolute;
          top: 0;
          left: 0;
          width: 100%;
          height: 100%;
-         background: rgba(0, 0, 0, 0.5);
-      }
-
-      .hero-content {
-         position: relative;
+         background-color: rgba(0, 0, 0, 0.7);
+         /* Shadow hitam 50% */
          z-index: 1;
       }
 
-      a.card {
-         text-decoration: none;
-         color: inherit;
-         transition: transform 0.2s ease;
-      }
-
-      a.card:hover {
-         transform: scale(1.03);
-         box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+      .hero .container {
+         position: relative;
+         z-index: 2;
+         color: white;
       }
    </style>
+
 </head>
 
-<body class="d-flex flex-column vh-100 bg-light">
-   <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow">
+<body>
+   <nav class="navbar navbar-expand-lg">
       <div class="container">
-         <a href="index.php" class="navbar-brand fw-bold">Service Mobil</a>
-      </div>
+         <a class="navbar-brand" href="index.php"><i class="fas fa-tools"></i> Service Mobil</a>
+         <?php session_start(); ?>
+         <div class="ms-auto d-flex align-items-center gap-4">
+            <?php if (isset($_SESSION['is_login'])): ?>
+               <a href="customer.php" class="nav-link">Customer</a>
+               <a href="mobil.php" class="nav-link">Mobil</a>
+               <a href="layanan.php" class="nav-link">Layanan</a>
+               <a href="transaksi.php" class="nav-link">Transaksi</a>
+               <a href="logout.php" class="btn-logout">Logout</a>
+            <?php else: ?>
+               <a href="login.php" class="btn-login">Login</a>
+            <?php endif; ?>
+         </div>
    </nav>
 
-   <div class="hero text-white text-center">
-      <div class="hero-content">
-         <h1 class="fw-bold">Bengkel</h1>
-         <p class="fs-4">Solusi terpercaya untuk perawatan mobil Anda</p>
+   <section class="hero">
+      <div class="container">
+         <h1>Service Mobil Jaya Abadi</h1>
+         <p>Layanan terpercaya untuk mobil kesayangan anda</p>
       </div>
-   </div>
+   </section>
 
-   <div class="container mt-5">
+   <div class="container my-5">
       <div class="row text-center">
-         <div class="col-md-4 mb-3">
-            <a href="customer.php" class="card shadow p-3 bg-white d-block">
+         <div class="col-md-4 mb-4">
+            <div class="card p-4">
+               <div class="icon"><i class="fas fa-users"></i></div>
                <?php
                $q = "SELECT COUNT(*) AS total_customer FROM customer";
                $r = mysqli_query($conn, $q);
                $data = mysqli_fetch_assoc($r);
                ?>
-               <h3 class="text-primary"><?= $data['total_customer'] ?></h3>
-               <p class="fw-bold">Total Customer</p>
-            </a>
+               <h3><?= $data['total_customer'] ?></h3>
+               <p>Total Customer</p>
+            </div>
          </div>
-         <div class="col-md-4 mb-3">
-            <a href="mobil.php" class="card shadow p-3 bg-white d-block">
+         <div class="col-md-4 mb-4">
+            <div class="card p-4">
+               <div class="icon"><i class="fas fa-car"></i></div>
                <?php
                $q = "SELECT COUNT(*) AS total_mobil FROM mobil";
                $r = mysqli_query($conn, $q);
                $data = mysqli_fetch_assoc($r);
                ?>
-               <h3 class="text-success"><?= $data['total_mobil'] ?></h3>
-               <p class="fw-bold">Jumlah Mobil Terdaftar</p>
-            </a>
+               <h3><?= $data['total_mobil'] ?></h3>
+               <p>Mobil Terdaftar</p>
+            </div>
          </div>
-         <div class="col-md-4 mb-3">
-            <a href="transaksi.php" class="card shadow p-3 bg-white d-block">
+         <div class="col-md-4 mb-4">
+            <div class="card p-4">
+               <div class="icon"><i class="fas fa-calendar-check"></i></div>
                <?php
-               $q = "SELECT MAX(tanggal_transaksi) AS terakhir_service FROM transaksi";
+               $q = "SELECT COUNT(*) AS total_layanan FROM jenis_layanan";
                $r = mysqli_query($conn, $q);
                $data = mysqli_fetch_assoc($r);
-               $tgl = $data['terakhir_service'] ? date('d-m-Y', strtotime($data['terakhir_service'])) : 'Belum Ada';
                ?>
-               <h3 class="text-danger"><?= $tgl ?></h3>
-               <p class="fw-bold">Terakhir Service</p>
-            </a>
+               <h3><?= $data['total_layanan'] ?></h3>
+               <p>Jenis Layanan</p>
+            </div>
          </div>
       </div>
    </div>
 
-   <!-- Daftar Jenis Layanan -->
-   <div class="container py-5">
-      <h2 class="text-center mb-4">Daftar Jenis Layanan</h2>
+   <div class="container">
+      <h2 class="section-title">Jenis Layanan</h2>
       <div class="row">
          <?php
          $query = mysqli_query($conn, "SELECT * FROM jenis_layanan ORDER BY nama_layanan ASC");
          while ($row = mysqli_fetch_assoc($query)):
          ?>
-            <div class="col-md-4 mb-3">
-               <div class="card shadow-sm h-100">
-                  <div class="card-body">
-                     <h5 class="card-title text-primary"><?= htmlspecialchars($row['nama_layanan']) ?></h5>
-                     <p class="card-text">Harga: <strong>Rp <?= number_format($row['harga'], 0, ',', '.') ?></strong></p>
-                  </div>
+            <div class="col-md-4 mb-4">
+               <div class="card p-4">
+                  <h5><?= htmlspecialchars($row['nama_layanan']) ?></h5>
+                  <p>Harga: <strong>Rp <?= number_format($row['harga'], 0, ',', '.') ?></strong></p>
                </div>
             </div>
          <?php endwhile; ?>
       </div>
    </div>
 
-      <!-- Footer -->
-   <footer class="bg-dark text-white text-center py-4 mt-auto">
-      <div class="container">
-         <p class="mb-1 fw-bold">© <?= date("Y") ?> Bengkel Service Mobil UMS</p>
-         <p class="mb-0">Dibuat dengan ❤️ oleh Tim Mahasiswa Informatika</p>
-      </div>
+   <footer>
+      <p>© <?= date("Y") ?> <span>Service Mobil Jaya Abadi</span></p>
+      <p>Dibuat oleh <span>Kelompok Undefined</span></p>
    </footer>
 
    <script src="js/bootstrap.bundle.min.js"></script>
